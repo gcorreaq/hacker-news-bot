@@ -9,7 +9,7 @@ repos:
     - id: debug-statements
     - id: name-tests-test
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.2.0
+    rev: v3.2.2
     hooks:
     - id: pyupgrade
       args: [--py310-plus]
@@ -28,7 +28,7 @@ repos:
       - id: isort
         name: isort (python)
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.982
+    rev: v0.991
     hooks:
     - id: mypy
       additional_dependencies:
