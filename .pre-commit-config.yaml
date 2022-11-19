@@ -33,4 +33,5 @@ repos:
     - id: mypy
       additional_dependencies:
         - types-requests
+        - arrow
       args: [--strict]
