@@ -1,4 +1,4 @@
-from datasources.hacker_news import Item
+from hacker_news_bot.datasources.hacker_news import Item
 
 
 def prepare_toot_message(item: Item) -> str:
