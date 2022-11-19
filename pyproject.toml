@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "hacker-news-bot"
+version = "0.1.0"
+description = "Bot to scrape the news.ycombinator.com API and post to Mastodon"
+authors = ["Gonzalo Correa <gcorrea.q@gmail.com>"]
+license = "AGPL-3.0"
+readme = "README.md"
+packages = [{include = "hacker_news_bot"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+requests = "^2.28.1"
+arrow = "^1.2.3"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.0"
+mypy = "^0.990"
+black = "^22.10.0"
+isort = "^5.10.1"
+flake8 = "^5.0.4"
+types-requests = "^2.28.11.2"
+pre-commit = "^2.20.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 100
+
+[tool.isort]
+profile = "black"
+line_length = 100
+src_paths = ["hacker_news_bot"]
+
+[tool.mypy]
+python_version = "3.11"
+mypy_path = "hacker_news_bot"
+exclude = ".venv/"
+explicit_package_bases = true
+warn_return_any = true
+warn_unused_configs = true
