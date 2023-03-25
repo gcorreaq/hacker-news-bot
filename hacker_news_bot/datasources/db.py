@@ -10,6 +10,8 @@ def init_db() -> sqlite3.Connection:
                 stored_at INT NOT NULL,
                 created_at INT NOT NULL,
                 updated_at INT NOT NULL,
+                toot_id INT,
+                tooted_at INT
             )"""
         )
     return db

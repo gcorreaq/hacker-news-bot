@@ -21,19 +21,22 @@ class HackerNews:
 
     def story_already_posted(self, story: Item) -> bool:
         results = self.db.execute(
-            "SELECT id FROM hn_posts WHERE id = :id LIMIT 1", {"id": story.item_id}
+            "SELECT id FROM hn_posts WHERE id = :id AND tooted_at IS NOT NULL LIMIT 1",
+            {"id": story.item_id},
         )
         return any(results)
 
     def store_new_story(self, story: Item) -> None:
         with self.db:
             self.db.execute(
-                "INSERT INTO hn_posts VALUES (:id, :stored_at, :created_at, :updated_at)",
+                "INSERT INTO hn_posts VALUES (:id, :stored_at, :created_at, :updated_at, :toot_id, :tooted_at)",  # noqa: E501
                 {
                     "id": story.item_id,
                     "stored_at": arrow.utcnow().timestamp(),
                     "created_at": story.creation_date.timestamp(),
                     "updated_at": story.creation_date.timestamp(),
+                    "toot_id": None,
+                    "tooted_at": None,
                 },
             )
 
@@ -47,6 +50,7 @@ class HackerNews:
         top_stories = self.api.top_stories(limit=limit)
         for story in top_stories:
             if self.story_already_posted(story):
+                logger.debug("Skipping post with ID %s: Already fetched", story.item_id)
                 continue
 
             self.store_new_story(story)
