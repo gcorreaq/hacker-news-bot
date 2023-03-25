@@ -41,7 +41,6 @@ class Mastodon:
             status=message,
             visibility="unlisted",
             language="en",
-            idempotency_key=item.item_id,
         )
         self._update_item_record(item=item, toot=toot)
         logger.debug(f"Toot {toot}")
