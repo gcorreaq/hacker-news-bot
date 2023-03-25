@@ -4,6 +4,7 @@ from collections.abc import Iterable
 
 import arrow
 
+from hacker_news_bot.datasources.db import init_db
 from hacker_news_bot.datasources.hacker_news.api import Api
 from hacker_news_bot.datasources.hacker_news.definitions import Item
 
@@ -16,16 +17,7 @@ class HackerNews:
 
     def __init__(self) -> None:
         self.api = Api()
-        self.db = sqlite3.connect(":memory:")
-        with self.db:
-            self.db.execute(
-                """CREATE TABLE IF NOT EXISTS hn_posts(
-                    id PRIMARY_KEY,
-                    stored_at,
-                    created_at,
-                    updated_at
-                )"""
-            )
+        self.db = init_db()
 
     def story_already_posted(self, story: Item) -> bool:
         results = self.db.execute(
